@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PunctualityTracker</title>
+</head>
+<style>
+    html {
+        background-color: #131516;
+        color: #d8d4cf;
+    }
+    body {
+        text-align: center;
+    }
+</style>
+<script>
+    function populate_table(data) {
+        let table = document.getElementById("student_table");
+        data.forEach(student => {
+            var tr = document.createElement('tr');
+            tr.innerHTML = '<td>' + student.name + '</td>' +
+            '<td>' + student.total_times + '</td>' +
+            '<td>' + student.total_minutes + '</td>' +
+            '<td>' + student.total_days + '</td>' +
+            '<td>' + ((student.total_times / student.total_days) * 100).toFixed(2) + " %" + '</td>' +
+            '<td>' + student.average_time + '</td>'
+            table.appendChild(tr);
+        });
+        const el = document.getElementById('percent_late')
+        if (el) {
+            el.click()
+        }
+    }
+  fetch("data.json")
+  .then(res => res.json())
+  .then(data => populate_table(data))
+</script>
+<body>
+    <table class="sortable" align="center">
+        <thead>
+        <tr>
+            <th>Elev</th>
+            <th>Forseelser</th>
+            <th>Minuter forsent</th>
+            <th>Dage mødt</th>
+            <th id="percent_late">% af dage forsent</th>
+            <th>Gnm møde tidspunkt</th>
+        </tr>
+        <tbody id="student_table">
+        </tbody>
+    </thead>
+    </table>
+      <link href="sortable.min.css" rel="stylesheet" />
+      <script src="sortable.min.js"></script>
+    </body>
+</html>
